@@ -1,0 +1,16 @@
+A SQL query with multiple joins
+Used to find the top 5 movies by revenue
+
+SELECT C.title,
+       C.rating, 
+       A.name AS genre,
+       SUM (amount) AS payment_amount
+FROM category A
+INNER JOIN film_category B ON A.category_id=B.category_id
+INNER JOIN film C ON B.film_id=C.film_id
+INNER JOIN inventory D ON C.film_id=D.film_id
+INNER JOIN rental E ON D.inventory_id=E.inventory_id
+INNER JOIN payment F ON E.rental_id=F.rental_id
+GROUP BY C.title, C.rating, genre
+ORDER BY payment_amount DESC
+LIMIT 5
